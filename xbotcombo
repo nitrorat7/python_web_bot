@@ -1,0 +1,40 @@
+import requests
+import re
+from bs4 import BeautifulSoup
+'''
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+'''
+
+
+
+#wtyczka look it
+#obsluga wyjatkow: https://selenium-python.readthedocs.io/api.html
+#action chains: -> .perform()
+#explicit waits -> czekamy az podanny element wyswietlli sie na stronie: https://selenium-python.readthedocs.io/waits.html
+
+
+
+
+#step 1 dostaje pierwszy link cd -> potem otworzymy go w selenium
+URL = 'http://www.google.com/search?q=x-kom+msi+rtx+3080+x+gaming+trio'
+page = requests.get(URL)
+soup = BeautifulSoup(page.text, "html.parser")
+linklist = []
+eureka = None
+for tag in soup.findAll('a',href=True):
+    link = tag['href']
+    print('URL: ',link)
+    print(type(link))
+    if re.search(r'/url*',link):
+        print('eureka')
+        eureka = link
+        break
+
+print(eureka) #link do produktu juz na stronie sklepu
