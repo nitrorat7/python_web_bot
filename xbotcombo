@@ -1,7 +1,8 @@
-import requests
 import re
+import time
+import requests
 from bs4 import BeautifulSoup
-'''
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -10,14 +11,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-'''
 
 
 
 #wtyczka look it
 #obsluga wyjatkow: https://selenium-python.readthedocs.io/api.html
 #action chains: -> .perform()
-#explicit waits -> czekamy az podanny element wyswietlli sie na stronie: https://selenium-python.readthedocs.io/waits.html
+#explicit waits -> czekamy az podanny element wyswietlli
+# sie na stronie: https://selenium-python.readthedocs.io/waits.html
 
 
 
@@ -27,14 +28,20 @@ URL = 'http://www.google.com/search?q=x-kom+msi+rtx+3080+x+gaming+trio'
 page = requests.get(URL)
 soup = BeautifulSoup(page.text, "html.parser")
 linklist = []
-eureka = None
+EUREKA = None
 for tag in soup.findAll('a',href=True):
     link = tag['href']
-    print('URL: ',link)
-    print(type(link))
+    #print('URL: ',link)
+    #print(type(link))
     if re.search(r'/url*',link):
         print('eureka')
-        eureka = link
+        EUREKA = link
         break
-
-print(eureka) #link do produktu juz na stronie sklepu
+EUREKA_LINK =  ('\"'+EUREKA[7:]+'\"')
+print(str(EUREKA_LINK))
+#step 1.0 end
+#trzens obcisc url spradzic w zeszycie
+driver = webdriver.Firefox()
+driver.get("google.pl")
+time.sleep(4)
+driver.quit()
