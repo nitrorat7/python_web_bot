@@ -143,6 +143,7 @@ def probazakupuxkom(EUREKA_LINK, driver):
         print("zakup udany")
         time.sleep(10)
         driver.save_screenshot('dowód_zakupu.png')
+        driver.quit()
     except:
         print("zakup nieudany")
         driver.quit()
